@@ -2,6 +2,6 @@ import app from "./app.js";
 import { connectDB } from "./config/db.js";
 
 connectDB();
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log("Servidor Activo"); 
 });
