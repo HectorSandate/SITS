@@ -23,7 +23,8 @@ const client = new S3Client({
   },
 });
 
-//Para subir archivo a S3
+
+//Para subir archivo a S3 y obtener su URL pública
 export async function uploadFile(file) {
   const stream = fs.createReadStream(file.tempFilePath);
   const uploadParams = {
@@ -32,8 +33,17 @@ export async function uploadFile(file) {
     Body: stream,
   };
   const command = new PutObjectCommand(uploadParams);
-  return await client.send(command);
+  await client.send(command);
+
+  // Obtener la URL del archivo subido
+  const objectUrl = await getSignedUrl(
+    client,
+    new GetObjectCommand({ Bucket: AWS_BUCKET_SITS, Key: file.name }),
+    { expiresIn: 3600 } // URLs válidas por 1 hora
+  );
+  return { Location: objectUrl };
 }
+
 
 //Para obtener la lista de archivos en el bucket
 export async function getFiled() {

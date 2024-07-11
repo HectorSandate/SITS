@@ -48,11 +48,11 @@ app.use(
   })
 );
 
-//express-fileupload para poder subir imagenes
-app.post("/files", async (req, res) => {
-  const result = await uploadFile(req.files.file);
-  res.json({ message: "file uploaded", result });
-});
+  //express-fileupload para poder subir imagenes
+  app.post("/files", async (req, res) => {
+    const result = await uploadFile(req.files.file);
+    res.json({ message: "file uploaded", result });
+  });
 
 app.use("/api", authRoute);
 

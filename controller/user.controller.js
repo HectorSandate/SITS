@@ -1,5 +1,5 @@
 import User from '../models/user.model.js';
-import { uploadFile } from '../s3';
+import { uploadFile } from '../s3.js';
 
 export const registerUser = async (req, res) => {
   const { nombre, CURP, password, fechaDeNacimiento } = req.body;
@@ -9,27 +9,27 @@ export const registerUser = async (req, res) => {
     const newUser = new User({
       nombre,
       CURP,
-      password, // Ideally, you'll hash the password using bcrypt
+      password, // Idealmente, cifrar el password usando bcrypt
       fechaDeNacimiento,
     });
 
-    // Upload files to S3 and store URLs in User model
-    if (files.IFE) {
-      const ifeResult = await uploadFile(files.IFE);
-      newUser.IFE = ifeResult.Location;
+    // Si existen archivos, sube los archivos a S3 y guarda las URLs en el modelo User
+    if (files && files.INE) {
+      const ifeResult = await uploadFile(files.INE);
+      newUser.INE = ifeResult.Location;
     }
 
-    if (files.actaNacimiento) {
+    if (files && files.actaNacimiento) {
       const actaResult = await uploadFile(files.actaNacimiento);
       newUser.actaNacimiento = actaResult.Location;
     }
 
-    if (files.comprobanteDomicilio) {
+    if (files && files.comprobanteDomicilio) {
       const domicilioResult = await uploadFile(files.comprobanteDomicilio);
       newUser.comprobanteDomicilio = domicilioResult.Location;
     }
 
-    if (files.comprobanteIngresos) {
+    if (files && files.comprobanteIngresos) {
       const ingresosResult = await uploadFile(files.comprobanteIngresos);
       newUser.comprobanteIngresos = ingresosResult.Location;
     }
