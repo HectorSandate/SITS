@@ -15,22 +15,22 @@ export const registerUser = async (req, res) => {
 
     // Si existen archivos, sube los archivos a S3 y guarda las URLs en el modelo User
     if (files && files.INE) {
-      const ifeResult = await uploadFile(files.INE);
+      const ifeResult = await uploadFile(files.INE, CURP);
       newUser.INE = ifeResult.Location;
     }
 
     if (files && files.actaNacimiento) {
-      const actaResult = await uploadFile(files.actaNacimiento);
+      const actaResult = await uploadFile(files.actaNacimiento, CURP);
       newUser.actaNacimiento = actaResult.Location;
     }
 
     if (files && files.comprobanteDomicilio) {
-      const domicilioResult = await uploadFile(files.comprobanteDomicilio);
+      const domicilioResult = await uploadFile(files.comprobanteDomicilio, CURP);
       newUser.comprobanteDomicilio = domicilioResult.Location;
     }
 
     if (files && files.comprobanteIngresos) {
-      const ingresosResult = await uploadFile(files.comprobanteIngresos);
+      const ingresosResult = await uploadFile(files.comprobanteIngresos, CURP);
       newUser.comprobanteIngresos = ingresosResult.Location;
     }
 

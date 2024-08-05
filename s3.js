@@ -23,33 +23,32 @@ const client = new S3Client({
   },
 });
 
+// Para subir archivo a S3 y obtener su URL pública
+export async function uploadFile(file, userId) {
+  try {
+    const stream = fs.createReadStream(file.tempFilePath);
+    const uploadParams = {
+      Bucket: AWS_BUCKET_SITS,
+      Key: `${userId}/${file.name}`, // Incluye el userId en la clave del archivo
+      Body: stream,
+    };
+    const command = new PutObjectCommand(uploadParams);
+    await client.send(command);
 
-//Para subir archivo a S3 y obtener su URL pública
-export async function uploadFile(file) {
-  const stream = fs.createReadStream(file.tempFilePath);
-  const uploadParams = {
-    Bucket: AWS_BUCKET_SITS,
-    Key: file.name,
-    Body: stream,
-  };
-  const command = new PutObjectCommand(uploadParams);
-  await client.send(command);
+    // Construir la URL pública del archivo subido
+    const publicUrl = `https://${AWS_BUCKET_SITS}.s3.${AWS_BUCKET_REGION}.amazonaws.com/${uploadParams.Key}`;
 
-  // Obtener la URL del archivo subido
-  const objectUrl = await getSignedUrl(
-    client,
-    new GetObjectCommand({ Bucket: AWS_BUCKET_SITS, Key: file.name }),
-    { expiresIn: 3600 } // URLs válidas por 1 hora
-  );
-  return { Location: objectUrl };
+    return { Location: publicUrl };
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    throw new Error("Error uploading file to S3");
+  }
 }
-
-
 //Para obtener la lista de archivos en el bucket
 export async function getFiled() {
   const command = new ListObjectsCommand({ Bucket: AWS_BUCKET_SITS });
   const data = await client.send(command);
-  
+
   const files = await Promise.all(
     data.Contents.map(async (item) => {
       const objectUrl = await getSignedUrl(
@@ -81,7 +80,7 @@ export async function getFileUrl(filename) {
     Bucket: AWS_BUCKET_SITS,
     Key: filename,
   });
-  return await getSignedUrl(client, command, {expiresIn: 100});
+  return await getSignedUrl(client, command, { expiresIn: 100 });
 }
 
 //Para descargar un archivo
