@@ -8,7 +8,7 @@ export const AWS_BUCKET_SITS = process.env.AWS_BUCKET_SITS;
 export const AWS_BUCKET_REGION = process.env.AWS_BUCKET_REGION;
 export const AWS_PUCLIC_KEY = process.env.AWS_PUCLIC_KEY;
 export const AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 
 const MONGO_URL = process.env.MONGO_URL;
 
-console.log(AWS_BUCKET_SITS,AWS_BUCKET_REGION, AWS_PUCLIC_KEY, AWS_SECRET_KEY, MONGO_URL)

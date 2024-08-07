@@ -14,6 +14,7 @@ import {
 import fs from "fs";
 import { time } from "console";
 
+
 //Donde se especifica el cliente y sus claves
 const client = new S3Client({
   region: AWS_BUCKET_REGION,
@@ -31,6 +32,7 @@ export async function uploadFile(file, userId) {
       Bucket: AWS_BUCKET_SITS,
       Key: `${userId}/${file.name}`, // Incluye el userId en la clave del archivo
       Body: stream,
+      ContentType: "application/pdf" // Establece el ContentType a PDF
     };
     const command = new PutObjectCommand(uploadParams);
     await client.send(command);

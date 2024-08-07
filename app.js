@@ -4,7 +4,12 @@ import authRoute from "./routes/auth.routes.js";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import { uploadFile, getFiled, getFileUnic, downloadFile, getFileUrl } from "./s3.js";
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 const app = express();
+dotenv.config();
+
+
 
 app.use(
   cors({
@@ -47,6 +52,37 @@ app.use(
     tempFileDir: "./uploads",
   })
 );
+
+const {EMAIL_PASSWORD}  = process.env; 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'hectorjosediazsandate@gmail.com',
+    pass: EMAIL_PASSWORD,
+  },
+});
+
+console.log(EMAIL_PASSWORD )
+
+app.post('/enviar-correo', (req, res) => {
+  const { titulo, agremiado, fecha } = req.body;
+
+  const mailOptions = {
+    from: 'hectorjosediazsandate@gmail.com',
+    to: 'hector_3127210071@utd.edu.mx',
+    subject: `Solicitud de Beneficio: ${titulo}`,
+    text: `Hola ${agremiado},\n\nHas solicitado el beneficio: ${titulo} el día ${fecha}.`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error al enviar el correo:', error);
+      return res.status(500).send('Error al enviar el correo');
+    }
+    console.log('Correo enviado: ' + info.response);
+    res.status(200).send('Correo enviado exitosamente');
+  });
+});
 
   //express-fileupload para poder subir imagenes
   app.post("/files", async (req, res) => {
