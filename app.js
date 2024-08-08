@@ -70,8 +70,8 @@ app.post('/enviar-correo', (req, res) => {
   const mailOptions = {
     from: 'hectorjosediazsandate@gmail.com',
     to: 'hector_3127210071@utd.edu.mx',
-    subject: `Solicitud de Beneficio: ${titulo}`,
-    text: `El agremiado ${agremiado}, requiere de ${solicitud}:${titulo} el día ${fecha}.
+    subject: `Solicitud: ${titulo}`,
+    text: `El agremiado ${agremiado}, requiere de ${titulo} el día ${fecha}.
           CURP: ${CURP}
           Numero: ${numero}`,
   };
