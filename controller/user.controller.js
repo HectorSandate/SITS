@@ -90,7 +90,10 @@ export const loginUser = async (req, res) => {
     res.status(200).json({
       id: user._id,
       nombre: user.nombre,
+      numero: user.numero,
+      status: user.status, // Asegúrate de incluir el campo status en la respuesta
       CURP: user.CURP,
+
       // Otros datos que podrías necesitar
     });
   } catch (error) {

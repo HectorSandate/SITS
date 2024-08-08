@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema(
     CURP: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     fechaDeNacimiento: { type: Date, required: false },
+    numero : {type: Number, require:true},
     INE: { type: String },
     actaNacimiento: { type: String },
     comprobanteDomicilio: { type: String },
