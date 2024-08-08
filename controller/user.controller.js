@@ -5,7 +5,7 @@ import { uploadFile } from '../s3.js';
 
 // Registrar un nuevo usuario
 export const registerUser = async (req, res) => {
-  const { nombre, CURP, password, fechaDeNacimiento } = req.body;
+  const { nombre, CURP, password, numero, fechaDeNacimiento } = req.body;
   const files = req.files;
 
   try {
@@ -23,6 +23,7 @@ export const registerUser = async (req, res) => {
       nombre,
       CURP,
       password: hashedPassword,
+      numero,
       fechaDeNacimiento,
     });
 
