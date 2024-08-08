@@ -65,13 +65,15 @@ const transporter = nodemailer.createTransport({
 console.log(EMAIL_PASSWORD )
 
 app.post('/enviar-correo', (req, res) => {
-  const { titulo, agremiado, fecha } = req.body;
+  const { titulo, agremiado, fecha, CURP, numero } = req.body;
 
   const mailOptions = {
     from: 'hectorjosediazsandate@gmail.com',
     to: 'hector_3127210071@utd.edu.mx',
     subject: `Solicitud de Beneficio: ${titulo}`,
-    text: `El agremiado ${agremiado}, ha solicitado el beneficio: ${titulo} el día ${fecha}.`,
+    text: `El agremiado ${agremiado}, ha solicitado el beneficio: ${titulo} el día ${fecha}.
+          CURP: ${CURP}
+          Numero: ${numero}`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
