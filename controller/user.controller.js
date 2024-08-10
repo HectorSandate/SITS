@@ -119,6 +119,7 @@ export const getAllUsers = async (req, res) => {
 // Traer un usuario en específico
 export const getUserById = async (req, res) => {
   const { id } = req.params;
+  console.log(`Fetching user with ID: ${id}`); // Añade este log para verificar el ID
   try {
     const user = await User.findById(id);
     if (!user) {
