@@ -17,7 +17,7 @@ router.post('/login', loginUser);
 //obtener todos los usuaios 
 router.get('/users', getAllUsers);
 //obtener usuario por id
-router.get('/users/:CURP', getUserById);
+router.get('/users/:id', getUserById);
 //borrar usuario
 router.delete('/users/:id', deleteUser);
 //cambiar status
