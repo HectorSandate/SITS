@@ -107,7 +107,7 @@ export const loginUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     // Especificamos los campos que queremos obtener
-    const users = await User.find({}, 'CURP nombre isActive');
+    const users = await User.find({}, 'id CURP nombre isActive');
 
     // Responder con los usuarios encontrados
     res.status(200).json(users);

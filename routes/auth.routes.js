@@ -5,6 +5,7 @@ import {
     obtenerBeneficios,
     actualizarBeneficio,
     eliminarBeneficio,
+    getBeneficiosPorCategoria,
   } from "../controller/beneficio.controller.js"; // Asegúrate de que el path sea correcto
 
 const router = Router();
@@ -16,7 +17,7 @@ router.post('/login', loginUser);
 //obtener todos los usuaios 
 router.get('/users', getAllUsers);
 //obtener usuario por id
-router.get('/users/:id', getUserById);
+router.get('/users/:CURP', getUserById);
 //borrar usuario
 router.delete('/users/:id', deleteUser);
 //cambiar status
@@ -35,5 +36,7 @@ router.put('/beneficios/:id', actualizarBeneficio);
 
 // Ruta para eliminar un beneficio
 router.delete('/beneficios/:id', eliminarBeneficio);
+// Ruta para buscar beneficios por categoría
+router.get('/beneficios/categoria/:categoria', getBeneficiosPorCategoria);
 
 export default router;

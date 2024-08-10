@@ -72,5 +72,22 @@ export const eliminarBeneficio = async (req, res) => {
   }
 };
 
+// Buscar beneficios por categoría
+export const getBeneficiosPorCategoria = async (req, res) => {
+  const { categoria } = req.params;
+  
+  try {
+    const beneficios = await Beneficio.find({ categoria });
+    
+    if (!beneficios.length) {
+      return res.status(404).json({ message: "No se encontraron beneficios para esta categoría." });
+    }
+
+    res.status(200).json(beneficios);
+  } catch (error) {
+    res.status(500).json({ message: "Error al buscar beneficios por categoría.", error });
+  }
+};
+
 
 
