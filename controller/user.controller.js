@@ -119,9 +119,8 @@ export const getAllUsers = async (req, res) => {
 // Traer un usuario en específico
 export const getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log(`Fetching user with ID: ${id}`); // Log para ver el ID
   try {
-    const user = await User.findById(Types.ObjectId(id));
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
@@ -129,7 +128,7 @@ export const getUserById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 // Eliminar un usuario
 export const deleteUser = async (req, res) => {
